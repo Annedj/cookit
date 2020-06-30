@@ -1,23 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Highlight } from 'react-instantsearch-dom';
+import { Typography } from '@material-ui/core';
 
-const Hit = ({ hit }) => (
-  <a href={'/'}>
-    <div className="card">
-      <div className="card-image">
-        <img src={hit.image} alt={hit.name} className="image" />
-      </div>
-      <div className="card-contents">
-        <Highlight attribute="title" hit={hit} className="card-title" />
-        <Highlight attribute="year" hit={hit} className="card-year" />
-        <div className="card-rating">Rating: {hit.rating}</div>
-        <div className="card-genre">
-          {' '}
-          <span>{hit.genre[0]}</span> <span>{hit.genre[1]}</span>{' '}
-        </div>
-      </div>
+const Hit = ({ hit }) => {
+  // console.log('Hit: ', hit);
+  const { id, service_urls, restaurant, description, tag_names, name, price } = hit;
+  return (
+    <div>
+      <Typography align="left" gutterBottom color="textSecondary">
+        {name}
+      </Typography>
+      <p>{description}</p>
+      {/* <Highlight attribute="name" hit={hit} /> */}
     </div>
-  </a>
-);
+  );
+};
+
+Hit.propTypes = {
+  hit: PropTypes.object.isRequired,
+};
 
 export default Hit;
