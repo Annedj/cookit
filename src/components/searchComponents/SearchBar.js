@@ -1,42 +1,91 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { makeStyles, Container, Typography } from '@material-ui/core';
-import SearchContent from './SearchContent';
-import algoliasearch from 'algoliasearch';
+import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
-  SearchBox,
+  Configure,
   Hits,
-  Highlight,
-  Stats,
-  SortBy,
+  connectSearchBox,
   Pagination,
 } from 'react-instantsearch-dom';
+import Autocomplete from './Autocomplete';
+import KitItem from '../KitItem';
+import Hit from './Hit';
+import KitHit from './KitHit';
+import './_search.scss';
 
 const useStyles = makeStyles({
   root: {},
+  header: {
+    paddingTop: '4em',
+    width: '100%',
+    display: 'flex',
+    backgroundColor: '#dce2e9',
+    height: '15vh',
+  },
+  searchBar: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  hitContainer: {
+    marginBottom: 8,
+    display: 'block',
+  },
 });
-const searchClient = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
-// const searchClient = algoliasearch('plDD180VQEY1', process.env.REACT_APP_ALGOLIA_ADMIN_API_KEY);
+
+const VirtualSearchBox = connectSearchBox(() => null);
+
+// const searchClient = algoliasearch('72XDT6UIC9', '785533ff85803b4813e53799b98833c2');
+const searchClient = algoliasearch('72XDT6UIC9', '785533ff85803b4813e53799b98833c2');
 // const indexName = client.initIndex('your_index_name');
 
-function SearchBar() {
-  const classes = useStyles();
+class SearchBar extends Component {
+  state = {
+    query: '',
+  };
 
-  return (
-    <Container className={classes.root}>
-      <Typography align="center" gutterBottom color="textSecondary">
-        Search a kit
-      </Typography>
-      <InstantSearch searchClient={searchClient} indexName="movies">
-        <header className="header">
-          <SearchBox className="search-bar" translations={{ placeholder: 'Search for Movies' }} />
-        </header>
-        <div className="body-content">
-          <SearchContent />
-        </div>
-      </InstantSearch>
-    </Container>
-  );
+  onSuggestionSelected = (_, { suggestion }) => {
+    console.log('Suggestion: ', suggestion);
+    this.setState({
+      query: suggestion.name,
+    });
+  };
+
+  onSuggestionCleared = () => {
+    this.setState({
+      query: '',
+    });
+  };
+
+  render() {
+    const { query } = this.state;
+    const classes = useStyles();
+
+    return (
+      <Container>
+        <Typography align="left" gutterBottom color="textSecondary">
+          Search for a kit
+        </Typography>
+        <InstantSearch searchClient={searchClient} indexName="kits">
+          <Configure hitsPerPage={5} />
+          <Autocomplete
+            onSuggestionSelected={this.onSuggestionSelected}
+            onSuggestionCleared={this.onSuggestionCleared}
+          />
+
+          <VirtualSearchBox
+            className="searchBar"
+            class="ais-SearchBox-input"
+            defaultRefinement={query}
+          />
+          {/* <SearchBox defaultRefinement={query} /> */}
+          <Hits className={classes.hitContainer} hitComponent={KitHit} />
+          <Pagination />
+        </InstantSearch>
+      </Container>
+    );
+  }
 }
 
 export default SearchBar;

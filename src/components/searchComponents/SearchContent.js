@@ -8,11 +8,11 @@ const SearchContent = () => (
       <div className="stats">
         <Stats />
       </div>
-      <div className="">
+      {/* <div className="">
         <SortBy defaultRefinement="movies" items={[{ value: 'movies', label: 'Most Relevant' }]} />
-      </div>
+      </div> */}
     </div>
-    <Hits hitComponent={Hit} />
+    {/* <Hits hitComponent={Hit} /> */}
     <div>
       <Pagination />
     </div>
