@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const api = 'https://api-cookit.herokuapp.com';
 
 let apiKey;
