@@ -32,24 +32,19 @@ export default function RestaurantItem({ element }) {
 
   const deliveryOptions = element.delivery_options;
   const kitCount = element.kit_count;
-  const { id, name, tag_names } = element;
+  const { id, name, service_urls, tag_names } = element;
 
   return (
     <Card elevation={3} key={id} className={classes.root}>
       <Link to={`/restaurant/${id}`} className={classes.link}>
         <CardActionArea>
+          <CardMedia className={classes.media} image={service_urls[0]} title={name} alt={name} />
           {/* <CardMedia
-            className={classes.media}
-            image={service_urls[0]}
-            title={name}
-            alt={name}
-          /> */}
-          <CardMedia
             className={classes.media}
             image="https://source.unsplash.com/800x450/?restaurant"
             title={name}
             alt={name}
-          />
+          /> */}
           {tag_names.map((tag) => (
             <Chip key={tag} label={tag} variant="outlined" m={1} />
           ))}
