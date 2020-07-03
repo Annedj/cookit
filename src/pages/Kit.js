@@ -87,7 +87,7 @@ const Kit = ({ id }) => {
             <Grid item xs={12} lg={8} xl={8} className={classes.right}>
               <Grid container>
                 <Grid item className={classes.image}>
-                  <Image
+                  {/* <Image
                     src="https://source.unsplash.com/800x450/?food,dish"
                     alt={data.name}
                     imageStyle={{
@@ -96,12 +96,12 @@ const Kit = ({ id }) => {
                       objectFit: 'cover',
                       width: '100%',
                     }}
-                  />
-                  {/* <Image
+                  /> */}
+                  <Image
                     src={data.service_urls[0]}
                     alt={data.name}
                     imageStyle={{ margin: '8px', height: '400px', objectFit: 'cover' }}
-                  /> */}
+                  />
                 </Grid>
               </Grid>
               <Box className={classes.tabContainer}>

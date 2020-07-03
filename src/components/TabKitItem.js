@@ -51,18 +51,18 @@ const useStyles = makeStyles({
 
 export default function KitItem({ element }) {
   const classes = useStyles();
-  const { id, restaurant, tag_names, name, price } = element;
+  const { id, restaurant, service_urls, tag_names, name, price } = element;
 
   return (
     <Card elevation={3} key={id} className={classes.root}>
       <Link to={`/kit/${id}`} className={classes.link}>
         <CardActionArea className={classes.actionArea}>
-          {/* <CardMedia className={classes.media} image={service_urls[0]} title={name} /> */}
-          <CardMedia
+          <CardMedia className={classes.media} image={service_urls[0]} title={name} />
+          {/* <CardMedia
             className={classes.media}
             image="https://source.unsplash.com/800x450/?food,dish"
             title={name}
-          />
+          /> */}
           <CardContent className={classes.content}>
             <Typography className={classes.kitName} gutterBottom variant="h6">
               {name}
